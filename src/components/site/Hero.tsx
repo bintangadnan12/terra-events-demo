@@ -11,14 +11,10 @@ export function Hero() {
   const descRef    = useRef<HTMLParagraphElement>(null);
   const ctaRef     = useRef<HTMLDivElement>(null);
   const statsRef   = useRef<HTMLDivElement>(null);
-  const imgRef     = useRef<HTMLImageElement>(null);
   const videoRef   = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
 
   useEffect(() => {
-    if (imgRef.current) {
-      gsap.to(imgRef.current, { scale: 1.12, duration: 14, ease: "none", repeat: -1, yoyo: true });
-    }
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
     tl.fromTo(badgeRef.current,   { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.6 }, 0.3)
       .fromTo(eyebrowRef.current, { opacity: 0, y: 20 },       { opacity: 1, y: 0, duration: 0.7 },     0.55)
@@ -40,14 +36,8 @@ export function Hero() {
   return (
     <section id="top" className="relative h-[100svh] min-h-[700px] w-full overflow-hidden flex flex-col items-center justify-center text-center">
 
-      <img
-        ref={imgRef}
-        src="/img/wedding1.jpg"
-        alt=""
-        aria-hidden
-        className="absolute inset-0 w-full h-full object-cover object-center scale-100"
-        style={{ willChange: "transform" }}
-      />
+      {/* Dark base shown while video loads */}
+      <div className="absolute inset-0" style={{ background: "#231E16" }} />
 
       <video
         ref={videoRef}
