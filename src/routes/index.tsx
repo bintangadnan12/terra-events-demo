@@ -8,6 +8,7 @@ import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { TrustBar } from "@/components/site/TrustBar";
 import { Floating } from "@/components/site/Floating";
+import { DemoBanner } from "@/components/site/DemoBanner";
 
 // Below-fold: lazy-loaded to split the 785 kB bundle
 const About = lazy(() => import("@/components/site/About").then((m) => ({ default: m.About })));
@@ -53,6 +54,7 @@ function Index() {
         <Footer />
       </Suspense>
       <Floating />
+      <DemoBanner />
     </main>
   );
 }
