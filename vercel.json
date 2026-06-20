@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "dist/client",
+  "buildCommand": "",
+  "installCommand": "",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
