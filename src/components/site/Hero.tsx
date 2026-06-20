@@ -1,13 +1,7 @@
-import { useEffect, useRef } from "react";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown, Volume2, VolumeX } from "lucide-react";
 import gsap from "gsap";
 import { BRAND, waLink } from "./data";
-
-const VIDEOS = [
-  "https://videos.pexels.com/video-files/7563427/7563427-uhd_2560_1440_25fps.mp4",
-  "https://videos.pexels.com/video-files/4065681/4065681-hd_1920_1080_25fps.mp4",
-  "https://videos.pexels.com/video-files/3199380/3199380-hd_1920_1080_25fps.mp4",
-];
 
 export function Hero() {
   const badgeRef   = useRef<HTMLDivElement>(null);
@@ -18,6 +12,8 @@ export function Hero() {
   const ctaRef     = useRef<HTMLDivElement>(null);
   const statsRef   = useRef<HTMLDivElement>(null);
   const imgRef     = useRef<HTMLImageElement>(null);
+  const videoRef   = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
 
   useEffect(() => {
     if (imgRef.current) {
@@ -33,6 +29,14 @@ export function Hero() {
       .fromTo(statsRef.current,   { opacity: 0 },              { opacity: 1, duration: 0.8 },            1.55);
   }, []);
 
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    const next = !muted;
+    videoRef.current.muted = next;
+    if (!next) videoRef.current.play();
+    setMuted(next);
+  };
+
   return (
     <section id="top" className="relative h-[100svh] min-h-[700px] w-full overflow-hidden flex flex-col items-center justify-center text-center">
 
@@ -46,10 +50,11 @@ export function Hero() {
       />
 
       <video
+        ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover object-center"
         autoPlay muted loop playsInline
       >
-        {VIDEOS.map((v) => <source key={v} src={v} type="video/mp4" />)}
+        <source src="/video/wedding.mp4" type="video/mp4" />
       </video>
 
       {/* Warm earthy overlay */}
@@ -58,7 +63,6 @@ export function Hero() {
       }} />
 
       <div className="relative z-10 container-x flex flex-col items-center">
-        {/* Organic badge */}
         <div
           ref={badgeRef}
           className="mb-6 px-5 py-2 border text-[0.56rem] tracking-[0.22em] uppercase text-white/70"
@@ -114,6 +118,21 @@ export function Hero() {
           ))}
         </div>
       </div>
+
+      {/* Mute / unmute toggle */}
+      <button
+        onClick={toggleMute}
+        aria-label={muted ? "Aktifkan suara" : "Matikan suara"}
+        className="absolute top-6 right-6 z-20 flex items-center gap-2 px-3 py-2 text-white/70 hover:text-white transition-colors"
+        style={{
+          background: "rgba(35,30,22,0.50)",
+          backdropFilter: "blur(8px)",
+          border: "1px solid rgba(92,138,110,0.30)"
+        }}
+      >
+        {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        <span className="text-[0.55rem] tracking-[0.18em] uppercase">{muted ? "Suara Off" : "Suara On"}</span>
+      </button>
 
       <a href="#trust" className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/45 z-10 flex flex-col items-center gap-1.5">
         <span className="eyebrow text-white/30" style={{ fontSize: "0.5rem" }}>SCROLL</span>
