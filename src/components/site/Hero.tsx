@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Volume2, VolumeX } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { ChevronDown } from "lucide-react";
 import gsap from "gsap";
 import { BRAND, waLink } from "./data";
 
@@ -11,8 +11,6 @@ export function Hero() {
   const descRef    = useRef<HTMLParagraphElement>(null);
   const ctaRef     = useRef<HTMLDivElement>(null);
   const statsRef   = useRef<HTMLDivElement>(null);
-  const videoRef   = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -25,24 +23,15 @@ export function Hero() {
       .fromTo(statsRef.current,   { opacity: 0 },              { opacity: 1, duration: 0.8 },            1.55);
   }, []);
 
-  const toggleMute = () => {
-    if (!videoRef.current) return;
-    const next = !muted;
-    videoRef.current.muted = next;
-    if (!next) videoRef.current.play();
-    setMuted(next);
-  };
-
   return (
     <section id="top" className="relative h-[100svh] min-h-[700px] w-full overflow-hidden flex flex-col items-center justify-center text-center">
 
-      {/* Dark base shown while video loads */}
       <div className="absolute inset-0" style={{ background: "#231E16" }} />
 
       <video
-        ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover object-center"
         autoPlay muted loop playsInline
+        preload="auto"
       >
         <source src="/video/wedding.mp4" type="video/mp4" />
       </video>
@@ -108,21 +97,6 @@ export function Hero() {
           ))}
         </div>
       </div>
-
-      {/* Mute / unmute toggle */}
-      <button
-        onClick={toggleMute}
-        aria-label={muted ? "Aktifkan suara" : "Matikan suara"}
-        className="absolute top-6 right-6 z-20 flex items-center gap-2 px-3 py-2 text-white/70 hover:text-white transition-colors"
-        style={{
-          background: "rgba(35,30,22,0.50)",
-          backdropFilter: "blur(8px)",
-          border: "1px solid rgba(92,138,110,0.30)"
-        }}
-      >
-        {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-        <span className="text-[0.55rem] tracking-[0.18em] uppercase">{muted ? "Suara Off" : "Suara On"}</span>
-      </button>
 
       <a href="#trust" className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/45 z-10 flex flex-col items-center gap-1.5">
         <span className="eyebrow text-white/30" style={{ fontSize: "0.5rem" }}>SCROLL</span>
