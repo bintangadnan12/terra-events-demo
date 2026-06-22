@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BRAND } from "@/components/site/data";
 import { lazy, Suspense } from "react";
 import { useScrollAnimations } from "@/hooks/useScrollAnimations";
+import { useLenis } from "@/hooks/useLenis";
 
 // Above-fold: loaded immediately
 import { Nav } from "@/components/site/Nav";
@@ -9,6 +10,9 @@ import { Hero } from "@/components/site/Hero";
 import { TrustBar } from "@/components/site/TrustBar";
 import { Floating } from "@/components/site/Floating";
 import { DemoBanner } from "@/components/site/DemoBanner";
+import { LoadingScreen } from "@/components/site/LoadingScreen";
+import { Cursor } from "@/components/site/Cursor";
+import { ScrollProgress } from "@/components/site/ScrollProgress";
 
 // Below-fold: lazy-loaded to split the 785 kB bundle
 const About = lazy(() => import("@/components/site/About").then((m) => ({ default: m.About })));
@@ -35,9 +39,13 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  useLenis();
   useScrollAnimations();
   return (
     <main className="bg-bg text-ink overflow-x-hidden">
+      <LoadingScreen />
+      <Cursor />
+      <ScrollProgress />
       <Nav />
       <Hero />
       <TrustBar />

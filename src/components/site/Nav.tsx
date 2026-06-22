@@ -1,24 +1,49 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { BRAND, NAV_LINKS, waLink } from "./data";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
+  const [dark, setDark] = useState(true);
+  const lastY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const stored = localStorage.getItem("terra_theme");
+    const isDark = stored !== "light";
+    setDark(isDark);
+    document.documentElement.classList.toggle("dark", isDark);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      if (y > 80) setHidden(y > lastY.current && y > 120);
+      else setHidden(false);
+      lastY.current = y;
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const toggleDark = () => {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("terra_theme", next ? "dark" : "light");
+  };
+
   return (
-    <header
+    <motion.header
+      animate={{ y: hidden ? "-100%" : "0%" }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-bg/95 backdrop-blur-md shadow-[0_1px_0_0_rgba(201,169,110,0.15)] py-3"
+          ? "bg-bg/95 backdrop-blur-md shadow-[0_1px_0_0_rgba(92,138,110,0.2)] py-3"
           : "bg-transparent py-5"
       }`}
     >
@@ -46,12 +71,19 @@ export function Nav() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex items-center gap-3">
+          <button
+            onClick={toggleDark}
+            aria-label="Toggle dark mode"
+            className={`p-2 transition-colors hover:text-gold ${scrolled ? "text-ink/60" : "text-white/70"}`}
+          >
+            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
           <a
             href={waLink(`Halo ${BRAND.nameShort}, saya ingin konsultasi gratis.`)}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 border px-5 py-2.5 text-xs tracking-[0.2em] uppercase transition-all hover:bg-gold hover:text-white ${
+            className={`inline-flex items-center gap-2 border px-5 py-2.5 text-xs tracking-[0.2em] uppercase transition-all hover:bg-gold hover:text-white hover:border-gold ${
               scrolled ? "border-gold text-gold" : "border-white/80 text-white"
             }`}
           >
@@ -59,13 +91,22 @@ export function Nav() {
           </a>
         </div>
 
-        <button
-          onClick={() => setOpen(true)}
-          className={`lg:hidden p-2 ${scrolled ? "text-ink" : "text-white"}`}
-          aria-label="Buka menu"
-        >
-          <Menu className="w-6 h-6" />
-        </button>
+        <div className="flex items-center gap-1 lg:hidden">
+          <button
+            onClick={toggleDark}
+            aria-label="Toggle dark mode"
+            className={`p-2 transition-colors ${scrolled ? "text-ink/60" : "text-white/70"}`}
+          >
+            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+          <button
+            onClick={() => setOpen(true)}
+            className={`p-2 ${scrolled ? "text-ink" : "text-white"}`}
+            aria-label="Buka menu"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -115,6 +156,6 @@ export function Nav() {
           </>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }

@@ -44,7 +44,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* ── CSS variables — Terra (Earthy/Sage) ─────── */
+/* ── CSS variables — Terra Light (default) ─── */
 :root {
   --radius: 0rem;
 
@@ -59,10 +59,23 @@
   --section-alt: #E4D9C8;
 }
 
+/* ── Dark mode override ─────────────────────── */
+html.dark {
+  --bg:        #231E16;
+  --gold:      #5C8A6E;
+  --gold-soft: rgba(92,138,110,0.12);
+  --ink:       #EDE5D8;
+  --blush:     #2A231A;
+  --card-bg:   #2D2620;
+  --border-clr: rgba(237,229,216,0.08);
+  --muted-txt: #A09478;
+  --section-alt: #271F18;
+}
+
 /* ── Base ────────────────────────────────────── */
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: auto; }
 
   body {
     background-color: var(--bg);
@@ -139,3 +152,31 @@ body::after {
 
 .section-alt  { background: var(--blush); }
 .section-dark { background: var(--ink); }
+
+/* ── Custom cursor ─────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  pointer-events: none;
+  z-index: 9990;
+  will-change: transform;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(92,138,110,0.5);
+  pointer-events: none;
+  z-index: 9989;
+  will-change: transform;
+  transition: width 0.25s, height 0.25s, opacity 0.25s;
+}
+
+@media (hover: none) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
