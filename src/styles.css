@@ -37,6 +37,7 @@
   --color-border:             var(--border-clr);
   --color-input:              var(--border-clr);
   --color-ring:               var(--gold);
+  --color-always-dark:        var(--always-dark);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -47,6 +48,9 @@
 /* ── CSS variables — Terra Light (default) ─── */
 :root {
   --radius: 0rem;
+
+  --always-dark:         #231E16;
+  --always-dark-overlay: rgba(35,30,22,0.82);
 
   --bg:        #EDE5D8;
   --gold:      #5C8A6E;

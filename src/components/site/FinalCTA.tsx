@@ -22,7 +22,7 @@ export function FinalCTA() {
     <section id="kontak" className="relative py-28 md:py-36 overflow-hidden" data-animate="fade-up">
       <div className="absolute inset-0">
         <img src={BG} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-ink/78" />
+        <div className="absolute inset-0" style={{ background: "var(--always-dark-overlay)" }} />
       </div>
 
       <div className="relative container-x text-center text-white max-w-3xl mx-auto">

@@ -10,7 +10,7 @@ const PROCESS_ICONS: Record<string, React.FC<LucideProps>> = {
 
 export function Process() {
   return (
-    <section className="bg-ink py-24 md:py-32 text-white">
+    <section className="py-24 md:py-32 text-white" style={{ background: "var(--always-dark)" }}>
       <div className="container-x">
         <SectionHead
           eyebrow="Alur Kerja"
@@ -41,7 +41,7 @@ export function Process() {
                   transition={{ duration: 0.6, delay: i * 0.15 }}
                   className="flex flex-col items-center text-center relative"
                 >
-                  <div className="relative w-20 h-20 flex items-center justify-center bg-ink border border-gold/40 rounded-full">
+                  <div className="relative w-20 h-20 flex items-center justify-center border border-gold/40 rounded-full" style={{ background: "var(--always-dark)" }}>
                     <Icon className="w-7 h-7 text-gold" />
                   </div>
                   <div className="font-display text-5xl text-gold/30 mt-6">{s.n}</div>

@@ -56,7 +56,7 @@ export function Packages() {
               {active.data.map((p) => (
                 <div
                   key={p.name}
-                  className={`relative shrink-0 w-[85%] md:w-auto snap-center bg-white border p-8 flex flex-col ${
+                  className={`relative shrink-0 w-[85%] md:w-auto snap-center bg-card border p-8 flex flex-col ${
                     p.popular
                       ? "border-gold shadow-[0_30px_80px_-40px_rgba(201,169,110,0.55)] md:scale-[1.02]"
                       : "border-gold/25"

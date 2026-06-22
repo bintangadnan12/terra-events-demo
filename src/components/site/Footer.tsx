@@ -8,7 +8,7 @@ const SOCIALS = [
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-white/65">
+    <footer className="text-white/65" style={{ background: "var(--always-dark)" }}>
       <div className="container-x pt-20 pb-16 md:pt-24 md:pb-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
 
@@ -76,7 +76,7 @@ export function Footer() {
             <a
               href={waLink(`Halo ${BRAND.nameShort}, saya ingin informasi lebih lanjut.`)}
               target="_blank" rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 bg-gold text-white px-5 py-3 text-[0.62rem] tracking-[0.2em] uppercase hover:bg-white hover:text-ink transition-colors"
+              className="mt-6 inline-flex items-center gap-2 bg-gold text-white px-5 py-3 text-[0.62rem] tracking-[0.2em] uppercase hover:opacity-85 transition-opacity"
             >
               <ExternalLink className="w-3.5 h-3.5" /> Chat WhatsApp
             </a>
